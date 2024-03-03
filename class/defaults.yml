@@ -32,6 +32,15 @@ parameters:
         nodeSelector: {}
         tolerations: []
 
+    # ------ Operator ----------------------------------------------------------
+
+    agent:
+      enabled: false
+      namespacePrefix: syn-sentry
+
+    instances:
+      system: {}
+
     # --- Helm configuration ---------------------------------------------------
 
     helmValues:
