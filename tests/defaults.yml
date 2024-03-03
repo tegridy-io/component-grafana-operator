@@ -1,3 +1,7 @@
-# Overwrite parameters here
-
-# parameters: {...}
+parameters:
+  sentry_operators:
+    operator:
+      grafana:
+        enabled: true
+      # agent:
+      #   enabled: true
