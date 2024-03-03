@@ -16,21 +16,21 @@ parameters:
           input_paths: []
           input_type: jsonnet
           output_path: ''
-      # agent:
-      #   'True':
-      #     input_type: helm
-      #     output_type: yaml
-      #     input_paths:
-      #       - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}
-      #     output_path: sentry-operators/10_helmchart
-      #     helm_values: ${sentry_operators:helmValues:agent}
-      #     helm_params:
-      #       name: agent-operator
-      #       namespace: ${sentry_operators:namespace:name}
-      #   'False':
-      #     input_paths: []
-      #     input_type: jsonnet
-      #     output_path: ''
+      agent:
+        'True':
+          input_type: helm
+          output_type: yaml
+          input_paths:
+            - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}
+          output_path: sentry-operators/10_helmchart
+          helm_values: ${sentry_operators:helmValues:agent}
+          helm_params:
+            name: agent-operator
+            namespace: ${sentry_operators:namespace:name}
+        'False':
+          input_paths: []
+          input_type: jsonnet
+          output_path: ''
     filter:
       grafana:
         'True':
@@ -41,15 +41,15 @@ parameters:
           type: jsonnet
           filter: ''
           path: ''
-      # agent:
-      #   'True':
-      #     type: jsonnet
-      #     filter: postprocess/fix_null.jsonnet
-      #     path: sentry-operators/10_helmchart/grafana-agent-operator/crds
-      #   'False':
-      #     type: jsonnet
-      #     filter: ''
-      #     path: ''
+      agent:
+        'True':
+          type: jsonnet
+          filter: postprocess/fix_null.jsonnet
+          path: sentry-operators/10_helmchart/grafana-agent-operator/crds
+        'False':
+          type: jsonnet
+          filter: ''
+          path: ''
 
   kapitan:
     dependencies:
@@ -81,10 +81,10 @@ parameters:
         output_path: .
       # --- Helm
       - ${_config:compile:grafana:${sentry_operators:operator:grafana:enabled}}
-      # - ${_config:compile:agent:${sentry_operators:operator:agent:enabled}}
+      - ${_config:compile:agent:${sentry_operators:operator:agent:enabled}}
 
   commodore:
     postprocess:
       filters:
         - ${_config:filter:grafana:${sentry_operators:operator:grafana:enabled}}
-        # - ${_config:filter:agent:${sentry_operators:operator:agent:enabled}}
+        - ${_config:filter:agent:${sentry_operators:operator:agent:enabled}}

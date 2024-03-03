@@ -3,5 +3,5 @@ parameters:
     operator:
       grafana:
         enabled: true
-      # agent:
-      #   enabled: true
+      agent:
+        enabled: true
