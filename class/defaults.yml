@@ -1,4 +1,47 @@
 parameters:
   sentry_operators:
     =_metadata: {}
-    namespace: syn-sentry-operators
+
+    # --- Component configuration ----------------------------------------------
+
+    namespace:
+      annotations: {}
+      labels: {}
+      name: syn-sentry-operators
+
+    charts:
+      grafana:
+        source: https://github.com/grafana/grafana-operator.git
+        version: v5.6.3
+      agent:
+        source: https://grafana.github.io/helm-charts
+        version: 0.3.17
+
+    # ------ Operator ----------------------------------------------------------
+
+    operator:
+      grafana:
+        enabled: false
+        resources: {}
+        nodeSelector: {}
+        tolerations: []
+
+      # agent:
+      #   enabled: false
+      #   resources: {}
+      #   nodeSelector: {}
+      #   tolerations: []
+
+    # --- Helm configuration ---------------------------------------------------
+
+    helmValues:
+      grafana:
+        resources: ${sentry_operators:operator:grafana:resources}
+        nodeSelector: ${sentry_operators:operator:grafana:nodeSelector}
+        tolerations: ${sentry_operators:operator:grafana:tolerations}
+
+      # agent:
+      #   fullnameOverride: agent-operator
+      #   resources: ${sentry_operators:operator:agent:resources}
+      #   nodeSelector: ${sentry_operators:operator:agent:nodeSelector}
+      #   tolerations: ${sentry_operators:operator:agent:tolerations}

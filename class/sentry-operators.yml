@@ -1,5 +1,68 @@
 parameters:
+  =_config:
+    compile:
+      grafana:
+        'True':
+          input_type: helm
+          output_type: yaml
+          input_paths:
+            - ${_base_directory}/helmcharts/grafana/${sentry_operators:charts:grafana:version}
+          output_path: sentry-operators/10_helmchart
+          helm_values: ${sentry_operators:helmValues:grafana}
+          helm_params:
+            name: grafana-operator
+            namespace: ${sentry_operators:namespace:name}
+        'False':
+          input_paths: []
+          input_type: jsonnet
+          output_path: ''
+      # agent:
+      #   'True':
+      #     input_type: helm
+      #     output_type: yaml
+      #     input_paths:
+      #       - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}
+      #     output_path: sentry-operators/10_helmchart
+      #     helm_values: ${sentry_operators:helmValues:agent}
+      #     helm_params:
+      #       name: agent-operator
+      #       namespace: ${sentry_operators:namespace:name}
+      #   'False':
+      #     input_paths: []
+      #     input_type: jsonnet
+      #     output_path: ''
+    filter:
+      grafana:
+        'True':
+          type: jsonnet
+          filter: postprocess/fix_null.jsonnet
+          path: sentry-operators/10_helmchart/grafana-operator/crds
+        'False':
+          type: jsonnet
+          filter: ''
+          path: ''
+      # agent:
+      #   'True':
+      #     type: jsonnet
+      #     filter: postprocess/fix_null.jsonnet
+      #     path: sentry-operators/10_helmchart/grafana-agent-operator/crds
+      #   'False':
+      #     type: jsonnet
+      #     filter: ''
+      #     path: ''
+
   kapitan:
+    dependencies:
+      - type: git
+        source: ${sentry_operators:charts:grafana:source}
+        output_path: ${_base_directory}/helmcharts/grafana/${sentry_operators:charts:grafana:version}/
+        subdir: deploy/helm/grafana-operator
+        ref: ${sentry_operators:charts:grafana:version}
+      - type: helm
+        source: ${sentry_operators:charts:agent:source}
+        chart_name: grafana-agent-operator
+        version: ${sentry_operators:charts:agent:version}
+        output_path: ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/
     compile:
       - input_paths:
           - ${_base_directory}/component/app.jsonnet
@@ -9,3 +72,19 @@ parameters:
           - ${_base_directory}/component/main.jsonnet
         input_type: jsonnet
         output_path: sentry-operators/
+      # --- Remove
+      - input_paths:
+          - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/crds/monitoring.coreos.com_podmonitors.yaml
+          - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/crds/monitoring.coreos.com_probes.yaml
+          - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/crds/monitoring.coreos.com_servicemonitors.yaml
+        input_type: remove
+        output_path: .
+      # --- Helm
+      - ${_config:compile:grafana:${sentry_operators:operator:grafana:enabled}}
+      # - ${_config:compile:agent:${sentry_operators:operator:agent:enabled}}
+
+  commodore:
+    postprocess:
+      filters:
+        - ${_config:filter:grafana:${sentry_operators:operator:grafana:enabled}}
+        # - ${_config:filter:agent:${sentry_operators:operator:agent:enabled}}
