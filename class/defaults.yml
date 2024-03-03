@@ -1,0 +1,4 @@
+parameters:
+  sentry_operators:
+    =_metadata: {}
+    namespace: syn-sentry-operators

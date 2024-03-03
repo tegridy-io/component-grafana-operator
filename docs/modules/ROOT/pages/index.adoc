@@ -1,0 +1,5 @@
+= Sentry Platform Operators
+
+sentry-operators is a Commodore component to manage Sentry Platform Operators.
+
+See the xref:references/parameters.adoc[parameters] reference for further details.
