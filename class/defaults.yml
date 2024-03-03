@@ -26,11 +26,11 @@ parameters:
         nodeSelector: {}
         tolerations: []
 
-      # agent:
-      #   enabled: false
-      #   resources: {}
-      #   nodeSelector: {}
-      #   tolerations: []
+      agent:
+        enabled: false
+        resources: {}
+        nodeSelector: {}
+        tolerations: []
 
     # --- Helm configuration ---------------------------------------------------
 
@@ -40,8 +40,8 @@ parameters:
         nodeSelector: ${sentry_operators:operator:grafana:nodeSelector}
         tolerations: ${sentry_operators:operator:grafana:tolerations}
 
-      # agent:
-      #   fullnameOverride: agent-operator
-      #   resources: ${sentry_operators:operator:agent:resources}
-      #   nodeSelector: ${sentry_operators:operator:agent:nodeSelector}
-      #   tolerations: ${sentry_operators:operator:agent:tolerations}
+      agent:
+        fullnameOverride: agent-operator
+        resources: ${sentry_operators:operator:agent:resources}
+        nodeSelector: ${sentry_operators:operator:agent:nodeSelector}
+        tolerations: ${sentry_operators:operator:agent:tolerations}

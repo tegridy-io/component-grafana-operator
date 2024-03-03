@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: operator
+    app.kubernetes.io/instance: agent-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: grafana-agent-operator
+    app.kubernetes.io/version: 0.40.1
+    helm.sh/chart: grafana-agent-operator-0.3.17
+  name: agent-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: agent-operator
+subjects:
+  - kind: ServiceAccount
+    name: agent-operator
+    namespace: syn-sentry-operators
