@@ -6,7 +6,7 @@ The parent key for all of the following parameters is `sentry_operators`.
 
 [horizontal]
 type:: string
-default:: `syn-sentry-operators`
+default:: `syn-grafana-operator`
 
 The namespace in which to deploy this component.
 

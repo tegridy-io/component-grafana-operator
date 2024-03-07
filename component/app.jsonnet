@@ -3,10 +3,10 @@ local inv = kap.inventory();
 local params = inv.parameters.sentry_operators;
 local argocd = import 'lib/argocd.libjsonnet';
 
-local app = argocd.App('sentry-operators', params.namespace.name);
+local app = argocd.App('grafana-operator', params.namespace.name);
 
 {
-  'sentry-operators': app {
+  'grafana-operator': app {
     spec+: {
       syncPolicy+: {
         syncOptions+: [

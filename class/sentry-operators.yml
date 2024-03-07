@@ -7,7 +7,7 @@ parameters:
           output_type: yaml
           input_paths:
             - ${_base_directory}/helmcharts/grafana/${sentry_operators:charts:grafana:version}
-          output_path: sentry-operators/10_helmchart
+          output_path: grafana-operator/10_helmchart
           helm_values: ${sentry_operators:helmValues:grafana}
           helm_params:
             name: grafana-operator
@@ -22,7 +22,7 @@ parameters:
           output_type: yaml
           input_paths:
             - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}
-          output_path: sentry-operators/10_helmchart
+          output_path: grafana-operator/10_helmchart
           helm_values: ${sentry_operators:helmValues:agent}
           helm_params:
             name: agent-operator
@@ -36,7 +36,7 @@ parameters:
         'True':
           type: jsonnet
           filter: postprocess/fix_null.jsonnet
-          path: sentry-operators/10_helmchart/grafana-operator/crds
+          path: grafana-operator/10_helmchart/grafana-operator/crds
         'False':
           type: jsonnet
           filter: ''
@@ -45,7 +45,7 @@ parameters:
         'True':
           type: jsonnet
           filter: postprocess/fix_null.jsonnet
-          path: sentry-operators/10_helmchart/grafana-agent-operator/crds
+          path: grafana-operator/10_helmchart/grafana-agent-operator/crds
         'False':
           type: jsonnet
           filter: ''
@@ -71,7 +71,7 @@ parameters:
       - input_paths:
           - ${_base_directory}/component/main.jsonnet
         input_type: jsonnet
-        output_path: sentry-operators/
+        output_path: grafana-operator/
       # --- Remove
       - input_paths:
           - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/crds/monitoring.coreos.com_podmonitors.yaml

@@ -1,4 +1,4 @@
-name: sentry-operators
+name: grafana-operator
 title: Sentry Platform Operators
 version: master
 start_page: ROOT:index.adoc

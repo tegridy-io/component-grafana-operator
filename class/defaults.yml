@@ -7,7 +7,7 @@ parameters:
     namespace:
       annotations: {}
       labels: {}
-      name: syn-sentry-operators
+      name: syn-grafana-operator
 
     charts:
       grafana:
