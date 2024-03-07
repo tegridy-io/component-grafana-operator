@@ -3,9 +3,9 @@ kind: Namespace
 metadata:
   labels:
     app.kubernetes.io/managed-by: commodore
-    app.kubernetes.io/name: syn-sentry-operators
+    app.kubernetes.io/name: syn-grafana-operator
     app.kubernetes.io/part-of: insights
     pod-security.kubernetes.io/audit: restricted
     pod-security.kubernetes.io/enforce: baseline
     pod-security.kubernetes.io/warn: restricted
-  name: syn-sentry-operators
+  name: syn-grafana-operator

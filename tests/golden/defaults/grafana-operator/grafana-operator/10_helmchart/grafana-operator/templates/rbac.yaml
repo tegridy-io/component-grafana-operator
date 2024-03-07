@@ -212,4 +212,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: grafana-operator
-    namespace: syn-sentry-operators
+    namespace: syn-grafana-operator
