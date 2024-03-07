@@ -5,7 +5,7 @@ local kube = import 'lib/kube.libjsonnet';
 local inv = kap.inventory();
 
 // The hiera parameters for the component
-local params = inv.parameters.sentry_operators;
+local params = inv.parameters.grafana_operator;
 
 // Namespace
 local namespace = kube.Namespace(params.namespace.name) {

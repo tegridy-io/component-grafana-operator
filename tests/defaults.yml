@@ -1,5 +1,5 @@
 parameters:
-  sentry_operators:
+  grafana_operator:
     operator:
       grafana:
         enabled: true

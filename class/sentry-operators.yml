@@ -6,12 +6,12 @@ parameters:
           input_type: helm
           output_type: yaml
           input_paths:
-            - ${_base_directory}/helmcharts/grafana/${sentry_operators:charts:grafana:version}
+            - ${_base_directory}/helmcharts/grafana/${grafana_operator:charts:grafana:version}
           output_path: grafana-operator/10_helmchart
-          helm_values: ${sentry_operators:helmValues:grafana}
+          helm_values: ${grafana_operator:helmValues:grafana}
           helm_params:
             name: grafana-operator
-            namespace: ${sentry_operators:namespace:name}
+            namespace: ${grafana_operator:namespace:name}
         'False':
           input_paths: []
           input_type: jsonnet
@@ -21,12 +21,12 @@ parameters:
           input_type: helm
           output_type: yaml
           input_paths:
-            - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}
+            - ${_base_directory}/helmcharts/agent/${grafana_operator:charts:agent:version}
           output_path: grafana-operator/10_helmchart
-          helm_values: ${sentry_operators:helmValues:agent}
+          helm_values: ${grafana_operator:helmValues:agent}
           helm_params:
             name: agent-operator
-            namespace: ${sentry_operators:namespace:name}
+            namespace: ${grafana_operator:namespace:name}
         'False':
           input_paths: []
           input_type: jsonnet
@@ -54,15 +54,15 @@ parameters:
   kapitan:
     dependencies:
       - type: git
-        source: ${sentry_operators:charts:grafana:source}
-        output_path: ${_base_directory}/helmcharts/grafana/${sentry_operators:charts:grafana:version}/
+        source: ${grafana_operator:charts:grafana:source}
+        output_path: ${_base_directory}/helmcharts/grafana/${grafana_operator:charts:grafana:version}/
         subdir: deploy/helm/grafana-operator
-        ref: ${sentry_operators:charts:grafana:version}
+        ref: ${grafana_operator:charts:grafana:version}
       - type: helm
-        source: ${sentry_operators:charts:agent:source}
+        source: ${grafana_operator:charts:agent:source}
         chart_name: grafana-agent-operator
-        version: ${sentry_operators:charts:agent:version}
-        output_path: ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/
+        version: ${grafana_operator:charts:agent:version}
+        output_path: ${_base_directory}/helmcharts/agent/${grafana_operator:charts:agent:version}/
     compile:
       - input_paths:
           - ${_base_directory}/component/app.jsonnet
@@ -74,17 +74,17 @@ parameters:
         output_path: grafana-operator/
       # --- Remove
       - input_paths:
-          - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/crds/monitoring.coreos.com_podmonitors.yaml
-          - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/crds/monitoring.coreos.com_probes.yaml
-          - ${_base_directory}/helmcharts/agent/${sentry_operators:charts:agent:version}/crds/monitoring.coreos.com_servicemonitors.yaml
+          - ${_base_directory}/helmcharts/agent/${grafana_operator:charts:agent:version}/crds/monitoring.coreos.com_podmonitors.yaml
+          - ${_base_directory}/helmcharts/agent/${grafana_operator:charts:agent:version}/crds/monitoring.coreos.com_probes.yaml
+          - ${_base_directory}/helmcharts/agent/${grafana_operator:charts:agent:version}/crds/monitoring.coreos.com_servicemonitors.yaml
         input_type: remove
         output_path: .
       # --- Helm
-      - ${_config:compile:grafana:${sentry_operators:operator:grafana:enabled}}
-      - ${_config:compile:agent:${sentry_operators:operator:agent:enabled}}
+      - ${_config:compile:grafana:${grafana_operator:operator:grafana:enabled}}
+      - ${_config:compile:agent:${grafana_operator:operator:agent:enabled}}
 
   commodore:
     postprocess:
       filters:
-        - ${_config:filter:grafana:${sentry_operators:operator:grafana:enabled}}
-        - ${_config:filter:agent:${sentry_operators:operator:agent:enabled}}
+        - ${_config:filter:grafana:${grafana_operator:operator:grafana:enabled}}
+        - ${_config:filter:agent:${grafana_operator:operator:agent:enabled}}

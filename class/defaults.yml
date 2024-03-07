@@ -1,5 +1,5 @@
 parameters:
-  sentry_operators:
+  grafana_operator:
     =_metadata: {}
 
     # --- Component configuration ----------------------------------------------
@@ -36,12 +36,12 @@ parameters:
 
     helmValues:
       grafana:
-        resources: ${sentry_operators:operator:grafana:resources}
-        nodeSelector: ${sentry_operators:operator:grafana:nodeSelector}
-        tolerations: ${sentry_operators:operator:grafana:tolerations}
+        resources: ${grafana_operator:operator:grafana:resources}
+        nodeSelector: ${grafana_operator:operator:grafana:nodeSelector}
+        tolerations: ${grafana_operator:operator:grafana:tolerations}
 
       agent:
         fullnameOverride: agent-operator
-        resources: ${sentry_operators:operator:agent:resources}
-        nodeSelector: ${sentry_operators:operator:agent:nodeSelector}
-        tolerations: ${sentry_operators:operator:agent:tolerations}
+        resources: ${grafana_operator:operator:agent:resources}
+        nodeSelector: ${grafana_operator:operator:agent:nodeSelector}
+        tolerations: ${grafana_operator:operator:agent:tolerations}
