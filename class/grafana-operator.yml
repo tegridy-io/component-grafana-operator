@@ -31,6 +31,21 @@ parameters:
           input_paths: []
           input_type: jsonnet
           output_path: ''
+      prometheus:
+        'True':
+          input_type: helm
+          output_type: yaml
+          input_paths:
+            - ${_base_directory}/helmcharts/agent/${grafana_operator:charts:prometheus:version}
+          output_path: prometheus-operator/10_helmchart
+          helm_values: ${grafana_operator:helmValues:prometheus}
+          helm_params:
+            name: prometheus-operator
+            namespace: ${grafana_operator:namespace:name}
+        'False':
+          input_paths: []
+          input_type: jsonnet
+          output_path: ''
     filter:
       grafana:
         'True':
@@ -63,6 +78,11 @@ parameters:
         chart_name: grafana-agent-operator
         version: ${grafana_operator:charts:agent:version}
         output_path: ${_base_directory}/helmcharts/agent/${grafana_operator:charts:agent:version}/
+      - type: helm
+        source: ${grafana_operator:charts:prometheus:source}
+        chart_name: prometheus-operator
+        version: ${grafana_operator:charts:prometheus:version}
+        output_path: ${_base_directory}/helmcharts/prometheus/${grafana_operator:charts:prometheus:version}/
     compile:
       - input_paths:
           - ${_base_directory}/component/app.jsonnet
@@ -82,6 +102,7 @@ parameters:
       # --- Helm
       - ${_config:compile:grafana:${grafana_operator:operator:grafana:enabled}}
       - ${_config:compile:agent:${grafana_operator:operator:agent:enabled}}
+      - ${_config:compile:prometheus:${grafana_operator:operator:prometheus:enabled}}
 
   commodore:
     postprocess:
