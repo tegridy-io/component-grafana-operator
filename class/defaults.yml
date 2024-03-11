@@ -16,6 +16,9 @@ parameters:
       agent:
         source: https://grafana.github.io/helm-charts
         version: 0.3.17
+      prometheus:
+        source: https://prometheus-community.github.io/helm-charts
+        version: 9.3.2
 
     # ------ Operator ----------------------------------------------------------
 
@@ -27,6 +30,12 @@ parameters:
         tolerations: []
 
       agent:
+        enabled: false
+        resources: {}
+        nodeSelector: {}
+        tolerations: []
+
+      prometheus:
         enabled: false
         resources: {}
         nodeSelector: {}
@@ -45,3 +54,9 @@ parameters:
         resources: ${grafana_operator:operator:agent:resources}
         nodeSelector: ${grafana_operator:operator:agent:nodeSelector}
         tolerations: ${grafana_operator:operator:agent:tolerations}
+
+      prometheus:
+        fullnameOverride: prometheus-operator
+        resources: ${grafana_operator:operator:prometheus:resources}
+        nodeSelector: ${grafana_operator:operator:prometheus:nodeSelector}
+        tolerations: ${grafana_operator:operator:prometheus:tolerations}

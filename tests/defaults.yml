@@ -5,3 +5,5 @@ parameters:
         enabled: true
       agent:
         enabled: true
+      prometheus:
+        enabled: true
